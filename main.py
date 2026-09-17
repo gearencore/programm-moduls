@@ -1,57 +1,63 @@
-from random import choice
+"""Основной файл приложения
 
-collection = []
+    версия 0.0.5
+
+    === Описание ===
+        Приложение может сохранять задачи, выдаёт список задач,
+        может удалять и редактировать задачи.
+"""
+
+import processes
+
+collection = ['task1', 'task2']  # список задач
 is_running = True
 
-def show_collection(task_collection):
-    print("============================")
-    for i, j in enumerate(task_collection):
-        print(i + 1, j)
-    print("============================")
+
+def show_collection():
+    print("=" * 45)
+    for i, task in enumerate(collection):
+        print(i + 1, task)
+    print("=" * 45)
+
 
 def show_menu():
-    print("1 - посмотреть задачи \n"
-          "2 - добавить задачи\n"
-          "3 - редактировать задачу \n"
-          "4 - удаление задачи \n"
-          "5 - Выход \n")
+    print("1 - Показать задачи")
+    print("2 - Добавить задачу")
+    print("3 - Редактировать задачу")
+    print("4 - Удалить задачу")
+    print("5 - Выход")
+
+
 while is_running:
     show_menu()
-    choice_user = input('Введите ваш выбор - ')
+    choice_user = input("Введите ваш выбор: ")
 
-    match str(choice_user):
-        case '1':
-            show_collection(collection)
-        case '2':
-            print("============================")
-            add_task = input("Введите имя задачи для создания - ")
-            if add_task.startswith(' '):
-                if len(add_task) < 2:
-                    print("Название не может быть пустым!")
-                    continue
-                else:
-                    collection.append(f"Новая задча {len(collection)+1}")
-            else:
-                collection.append(add_task)
-        case '3' :
-            show_collection(collection)
-            select_task = input("Введите номер задачи для редактирования - ")
-            if int(select_task.isdigit()):
-                if int(select_task) > 0 and int(select_task) <= len(collection):
-                    edit_task = input("Введите новое имя выбранной задачи для редактирования - ")
-                    collection[int(select_task) - 1] = edit_task
-                    print (f"задача '{int(select_task)} : {edit_task}'")
-                else:
-                    print("НЕТ ТАКОГО НОМЕРА В СПИСКЕ!")
-        case '4':
-            show_collection(collection)
-            delete_task = int(input("Введите номер задачи для удаления - "))
-            if select_task.isdigit():
-                if int(delete_task) > 0 and (delete_task <= len(collection)):
-                    collection.pop(delete_task - 1)
-                    print (f"Задача '{delete_task}' успешно удалена!")
-        case '5':
+    match choice_user:
+        case "1":
+            show_collection()
+            processes.show_message("Список задач показан")
+
+        case "2":
+            new_task = input("Введите имя задачи для добавления: ")
+            collection.append(new_task)
+            processes.show_message("Задача добавлена")
+
+        case "3":
+            show_collection()
+            select = int(input("Введите номер задачи: "))
+            new_name = input("Введите новое имя задачи: ")
+            collection[select - 1] = new_name
+            processes.show_message("Задача изменена")
+
+        case "4":
+            show_collection()
+            delete = int(input("Введите номер задачи для удаления: "))
+            collection.pop(delete - 1)
+            processes.show_message("Задача удалена")
+
+        case "5":
             is_running = False
-            print("До свидания!")
+            processes.show_message("До свидания!")
+
         case _:
-            print("Такого пункта нет!")
+            processes.show_message("Такого пункта нет...")
