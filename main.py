@@ -1,93 +1,111 @@
 """Основной файл приложения
 
-    версия 0.0.6
+    версия 0.0.7
 
     === Описание ===
-        Приложение может сохранять задачи, выдаёт список задач,
-        может удалять и редактировать задачи.
+        Приложение может сохранять задачи, выдает список задач, и может удалять и редактировать задачи
+
 """
+from random import choice
+import process
+import os
 
-import processes
-
-collection = ['task1', 'task2']  # список задач
+collection = ['task1', 'task2']  # list of tasks
 is_running = True
 
 
-def show_collection():
+def show_collection(task_collection):
     print("=" * 45)
-    for i, task in enumerate(collection):
-        print(i + 1, task)
+    for i, j in enumerate(collection):
+        print(i + 1, j)
     print("=" * 45)
 
 
 def show_menu():
-    print("1 - Показать задачи")
-    print("2 - Добавить задачу")
-    print("3 - Редактировать задачу")
-    print("4 - Удалить задачу")
-    print("5 - Выход")
+    print("1 - Показать задачи \n"
+          "2 - Добавить задачу \n"
+          "3 - Редактировать задачи \n"
+          "4 - Удаление задачи \n"
+          "5 - Выход")
+
 
 def check_confirm(select_task, task_list):
-    if (select_task.isdigit()):
-        if(int(select_task) > 0 and (select_task) <= len(task_list)):
+    if select_task.isdigit():
+        if int(select_task) > 0 and int(select_task) <= len(task_list):
             return True
         else:
-            print(f"Задачи с номером {select_task} нет в списке")
+            print(f"Задачи с номером {select_task} нет в списке!")
             return False
     else:
         print(f"Введите именно номер задачи!")
         return False
 
-def delete_task(task_collection):
-    delete_tasks = input("Введите номер задачи для управления")
-    if check_confirm(delete_tasks, task_collection):
-        task_collection.pop(int(delete_tasks)-1)
-        print(f"Задача с номером {delete_tasks} успешно удалена")
+def delete_tasks(task_collection):
+    delete_task = input("Введите номер задачи: ")
+    if check_confirm(delete_task, task_collection) == 1:
+        task_collection.pop(int(delete_task) - 1)
+        print(f"Задача {delete_task} удалена!")
+    else:
+        print("Неверный номер задачи!")
+
 
 def edit_task(task_collection):
-    select_task = input("Введите номер задачи")
-    if check_confirm(select_task, task_collection):
-        new_task = input("новое имя задачи")
-        task_collection[int(new_task)-1] = new_task
-        print(f"Задача {new_task} успешно изменина!")
-
-while is_running:
-    show_menu()
-    choice_user = input("Введите ваш выбор: ")
-
-    match str(choice_user):
-        case "1":
-            show_collection()
-            processes.show_message("Список задач показан")
-
-        case "2":
-            new_task = input("Введите имя задачи для добавления: ")
-            if len(new_task) < 2 :
-                print("название не может быть пустым!")
-                continue
-            else:
-                collection.append(new_task)
-            collection.append(new_task)
-            processes.show_message("Задача добавлена")
-
-        case "3":
-            show_collection()
-            select = int(input("Введите номер задачи: "))
-            new_name = input("Введите новое имя задачи: ")
-            collection[select - 1] = new_name
-            processes.show_message("Задача изменена")
-
-        case "4":
-            show_collection()
-            delete = int(input("Введите номер задачи для удаления: "))
-            collection.pop(delete - 1)
-            processes.show_message("Задача удалена")
-
-        case "5":
-            is_running = False
-            processes.show_message("До свидания!")
-
-        case _:
-            processes.show_message("Такого пункта нет...")
+    edit_task = input("Введите номер задачи: ")
+    if check_confirm(edit_task, task_collection) == 1:
+        task_collection[int(edit_task) - 1] = input("Новое имя задачи: ")
+    else:
+        print("Неверный номер задачи!")
 
 
+def add_task(task_collection):
+    task_name = input("Введите имя задачи для добавления: ")
+    if task_name.startswith(" "):
+        if len(task_name) < 2:
+            print("Название не может быть пустым")
+        else:
+            collection.append(f"Задача {len(collection) + 1}")
+    else:
+        collection.append(task_name)
+        print(f"Задача {task_name} успешно добавлена!")
+
+def main():
+    global is_running
+    while is_running:
+        show_menu()
+        choice_user = input('Введите ваш выбор: ')
+        task_collection = []
+
+        name_files = "save.txt"
+        file = open(name_files, "r", encoding="utf-8")
+        for line in file:
+            task_collection.append(line)
+
+
+        match choice_user:
+            case "1":
+                show_collection(collection)
+
+            case "2":
+                add_task(collection)
+                name_files = "save.txt"
+                file = open(name_files, "w", encoding="utf-8")
+                file.write(f"{task}\n")
+
+            case "3":
+                show_collection(collection)
+                edit_task(collection)
+
+            case "4":
+                show_collection(collection)
+                delete_tasks(collection)
+
+            case "0":
+                is_running = False
+                print("До свидиния!")
+
+            case _:
+                print('Такого пункта нет...')
+
+
+if __name__ == "__main__":
+    main()
