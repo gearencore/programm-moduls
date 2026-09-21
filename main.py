@@ -1,6 +1,6 @@
 """Основной файл приложения
 
-    версия 0.0.5
+    версия 0.0.6
 
     === Описание ===
         Приложение может сохранять задачи, выдаёт список задач,
@@ -27,18 +27,46 @@ def show_menu():
     print("4 - Удалить задачу")
     print("5 - Выход")
 
+def check_confirm(select_task, task_list):
+    if (select_task.isdigit()):
+        if(int(select_task) > 0 and (select_task) <= len(task_list)):
+            return True
+        else:
+            print(f"Задачи с номером {select_task} нет в списке")
+            return False
+    else:
+        print(f"Введите именно номер задачи!")
+        return False
+
+def delete_task(task_collection):
+    delete_tasks = input("Введите номер задачи для управления")
+    if check_confirm(delete_tasks, task_collection):
+        task_collection.pop(int(delete_tasks)-1)
+        print(f"Задача с номером {delete_tasks} успешно удалена")
+
+def edit_task(task_collection):
+    select_task = input("Введите номер задачи")
+    if check_confirm(select_task, task_collection):
+        new_task = input("новое имя задачи")
+        task_collection[int(new_task)-1] = new_task
+        print(f"Задача {new_task} успешно изменина!")
 
 while is_running:
     show_menu()
     choice_user = input("Введите ваш выбор: ")
 
-    match choice_user:
+    match str(choice_user):
         case "1":
             show_collection()
             processes.show_message("Список задач показан")
 
         case "2":
             new_task = input("Введите имя задачи для добавления: ")
+            if len(new_task) < 2 :
+                print("название не может быть пустым!")
+                continue
+            else:
+                collection.append(new_task)
             collection.append(new_task)
             processes.show_message("Задача добавлена")
 
@@ -61,3 +89,5 @@ while is_running:
 
         case _:
             processes.show_message("Такого пункта нет...")
+
+
