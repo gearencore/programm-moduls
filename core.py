@@ -1,9 +1,12 @@
-##==================================================
-##        Модуль с самыми важными функциями
-##==================================================
+"""
+                    === Функции для добавления, удаления и редактирования задач ===
+
+                                    === Версия приложения: 0.1.0 ===
+"""
 
 from utils import check_confirm
 
+### Удаление задач
 def delete_tasks(task_collection):
     delete_task = input("Введите номер задачи: ")
 
@@ -13,7 +16,7 @@ def delete_tasks(task_collection):
     else:
         print("Неверный номер задачи!")
 
-
+### Редактирование задач
 def edit_task(task_collection):
     edit_task_number = input("Введите номер задачи: ")
 
@@ -35,7 +38,7 @@ def edit_task(task_collection):
 
         print(f"Задача «{edit_name}» успешно изменена!")
 
-
+### Добавление задач
 def add_task(task_collection):
     task_name = input("Введите имя задачи: ").strip()
     task_content = input("Введите содержимое задачи: ").strip()
@@ -49,7 +52,5 @@ def add_task(task_collection):
         return
 
     full_task = f"{task_name} | {task_content}"
-
     task_collection.append(full_task + "\n")
-
     print(f"Задача «{task_name}» успешно добавлена!")
