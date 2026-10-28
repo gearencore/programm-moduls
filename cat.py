@@ -1,11 +1,12 @@
-from Animal import Animal
+from animal import Animal
+
 
 class Cat(Animal):
-    def __init__(self, name, age):
-        super().__init__(name, age)
+    def __init__(self, name, age, breed='Cat'):
+        super().__init__(name, age, breed)
 
-cat = Cat("Муся", 10)
-cat2 = Cat("Буся", 4)
-print(cat.__str__(), cat2.__str__())
-cat.speak("Мур, Мур")
-cat2.speak("Мяу, мяу")
+    def speak(self):
+        print(f'{self.name}: Мяу-мяу!')
+
+    def move(self):
+        print(f'{self.name} бесшумно крадётся')
