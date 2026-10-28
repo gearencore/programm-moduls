@@ -1,11 +1,15 @@
-from Animal import Animal
+from animal import Animal
 
-class Dog():
-    def __init__(self, name, age, breed):
-     super().__init__(name, age, breed)
+
+class Dog(Animal):
+    def __init__(self, name, age, breed='Dog'):
+        super().__init__(name, age, breed)
+
+    def speak(self):
+        print(f'{self.name}: Гав-гав!')
+
+    def move(self):
+        print(f'{self.name} радостно бежит')
 
     def defend(self):
         print('ГАВГАВГАВГАВГАВ')
-
-dog = Dog("Eater of Galaxy", 1000000, "Chihuiahuia")
-print(dog.__str__())
