@@ -1,8 +1,0 @@
-version = 1
-revision = 5
-requires-python = ">=3.14"
-
-[[package]]
-name = "d0-a2-d0-a6-d0-9amanagerandro-d0-b8-d1-81-d0-bf-d1-80-d0-b0-d0-b2-d0-bb-d0-b5-d0-bd-d0-bd-d1-8b-d0-b9"
-version = "0.1.0"
-source = { virtual = "." }
