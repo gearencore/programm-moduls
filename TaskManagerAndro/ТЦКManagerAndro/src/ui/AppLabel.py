@@ -1,4 +1,4 @@
-"""Переиспользуемая надпись интерфейса Task Manager."""
+
 import tkinter as tk
 
 
