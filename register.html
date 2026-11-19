@@ -1,30 +1,64 @@
-
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 50px auto; padding: 20px; }
+        input { width: 100%; padding: 8px; margin: 5px 0 15px; box-sizing: border-box; }
+        button { padding: 10px 20px; cursor: pointer; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
 </head>
+
 <body>
-    <h2>Регистрация</h2>
-    {% if error %}
-        <p>{{ error }}</p>
-    {% endif %}
-    <form action="/register" method="POST">
-        <label>Имя пользователя:</label>
-        <input type="text" name="username" required>
+
+    <h1>Регистрация</h1>
+
+    <form method="POST">
+
         <p>
-            <label>Пароль:</label>
-            <input type="password" name="password" required>
+            <label>Имя пользователя:</label><br>
+            <input
+                type="text"
+                name="username"
+                placeholder="Введите имя пользователя"
+                required
+            >
         </p>
+
         <p>
-            <label>Повторите пароль:</label>
-            <input type="password" name="confirm" required>
+            <label>Пароль:</label><br>
+            <input
+                type="password"
+                name="password"
+                placeholder="Придумайте пароль"
+                required
+            >
         </p>
+
+        <p>
+            <label>Повторите пароль:</label><br>
+            <input
+                type="password"
+                name="confirm_password"
+                placeholder="Повторите пароль"
+                required
+            >
+        </p>
+
         <button type="submit">Зарегистрироваться</button>
+
     </form>
-    <p>
-        <a href="/">Уже есть аккаунт? Войти</a>
-    </p>
+
+    {% if message %}
+    <p class="{% if error %}error{% else %}success{% endif %}">{{ message }}</p>
+    {% endif %}
+
+    <p><a href="/">На главную</a></p>
+
 </body>
+
 </html>
