@@ -1,15 +1,65 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход выполнен</title>
+    <title>Вход</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 50px auto; padding: 20px; }
+        input { width: 100%; padding: 8px; margin: 5px 0 15px; box-sizing: border-box; }
+        button { padding: 10px 20px; cursor: pointer; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
 </head>
+
 <body>
-    <h1>Добро пожаловать, {{ username }}!</h1>
-    <p>Авторизация прошла успешно.</p>
-    <form method="POST" action="{{ url_for('logout') }}">
-        <button type="submit">Выйти</button>
+
+    <h1>Вход</h1>
+
+    {% if username %}
+    <p class="success">Вы вошли как: <strong>{{ username }}</strong></p>
+    <p><a href="/logout">Выйти</a></p>
+    {% else %}
+
+    <form method="POST">
+
+        <p>
+            <label>Имя пользователя:</label><br>
+            <input
+                type="text"
+                name="username"
+                placeholder="Введите имя пользователя"
+                required
+                value="{{ request.form.username if request.form else '' }}"
+            >
+        </p>
+
+        <p>
+            <label>Пароль:</label><br>
+            <input
+                type="password"
+                name="password"
+                placeholder="Введите пароль"
+                required
+            >
+        </p>
+
+        <button type="submit">Войти</button>
+
     </form>
+
+    {% endif %}
+
+    {% if message %}
+    <p class="error">{{ message }}</p>
+    {% endif %}
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <p><a href="/">На главную</a></p>
+
 </body>
+
 </html>
