@@ -1,56 +1,30 @@
 
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
 </head>
-
 <body>
-
-    <h1>Регистрация</h1>
-
-    <form method="POST">
-
+    <h2>Регистрация</h2>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+    <form action="/register" method="POST">
+        <label>Имя пользователя:</label>
+        <input type="text" name="username" required>
         <p>
-            <label>Электронная почта:</label><br>
-            <input
-                type="email"
-                name="email"
-                placeholder="Введите почту"
-                required
-            >
+            <label>Пароль:</label>
+            <input type="password" name="password" required>
         </p>
-
         <p>
-            <label>Пароль:</label><br>
-            <input
-                type="password"
-                name="password"
-                placeholder="Придумайте пароль"
-                required
-            >
+            <label>Повторите пароль:</label>
+            <input type="password" name="confirm" required>
         </p>
-
-        <p>
-            <label>Повторите пароль:</label><br>
-            <input
-                type="password"
-                name="confirm_password"
-                placeholder="Повторите пароль"
-                required
-            >
-        </p>
-
         <button type="submit">Зарегистрироваться</button>
-
     </form>
-
-    <p>{{ message }}</p>
-
-    <a href="/">На главную</a>
-
+    <p>
+        <a href="/">Уже есть аккаунт? Войти</a>
+    </p>
 </body>
-
 </html>
