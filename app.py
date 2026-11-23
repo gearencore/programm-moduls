@@ -1,17 +1,12 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, make_response
 
-try:
-    import pymysql
-    from pymysql.cursors import DictCursor
-except ImportError:
-    raise ImportError("Установите pymysql: pip install pymysql")
 
 DB_CONFIG = {
     "host": "localhost",
     "user": "root",
     "password": "admin",
-    "database": "flask_auth",
+    "database": "users",
     "charset": "utf8mb4",
     "cursorclass": DictCursor,
     "autocommit": True,
@@ -226,19 +221,7 @@ def test_db():
         <p><b>Пользователей в users:</b> {count}</p>
         <p><a href="/">На главную</a></p>
         """
-    except Exception as e:
-        return f"""
-        <h2> Ошибка подключения к MySQL</h2>
-        <pre style="color:red; background:#fee; padding:15px;">{e}</pre>
-        <h3>Что проверить:</h3>
-        <ol>
-            <li>Запущен ли MySQL? (в XAMPP/WAMP — кнопка Start)</li>
-            <li>Правильный ли пароль в <code>DB_CONFIG</code> в app.py?</li>
-            <li>Создана ли база <code>flask_auth</code>? Выполни schema.sql</li>
-        </ol>
-        <p><a href="/">На главную</a></p>
-        """
-
+    
 """
 
 CREATE DATABASE IF NOT EXISTS flask_auth;
