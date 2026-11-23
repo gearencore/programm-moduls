@@ -1,0 +1,12 @@
+<html>
+<head>
+    <title>PROFILE</title>
+    </head>
+    <body>
+        {% if class_name %}
+        <h1>Вы вошли как {{ class_name }}!</h1>
+        {% elif error %}
+        <h1>{{ error }}</h1>
+        {% endif %}
+    </body>
+</html>

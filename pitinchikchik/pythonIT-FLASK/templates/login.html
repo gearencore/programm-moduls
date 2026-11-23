@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>LOGIN</title>
+    </head>
+    <body>
+    <form method="post" action="/login">
+        <input type="email" name="log_name" placeholder="введите почту" required>
+        <input type="password" name="log_pass" placeholder="введите пароль" required>
+        <button type="submit">подтвердить</button>
+    </form>
+    {% if error %}<p>{{ error }}</p>{% endif %}
+    </body>
+</html>
