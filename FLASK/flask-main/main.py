@@ -1,21 +1,13 @@
 import os
-
 from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.security import check_password_hash, generate_password_hash
-
 from databases import Database
-
 app = Flask(__name__)
-
-# Подключение создаётся при запуске приложения, а не при импорте модуля.
-# Это позволяет запускать тесты без установленной/запущенной MySQL.
 db = None
-
 
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -31,7 +23,6 @@ def register():
     try:
         db.insert_users(reg_email, generate_password_hash(reg_password))
     except Exception:
-        # Например, адрес уже зарегистрирован или база данных недоступна.
         return render_template('register.html', error='Не удалось зарегистрироваться. Проверьте данные.')
 
     return render_template('profile.html', class_name=reg_email, places=None, error=None)
@@ -51,8 +42,6 @@ def login():
     user = db.select_users(user_login)
     if user:
         stored_password = user.get('password', '')
-        # Поддерживаем и старые записи с паролем в открытом виде,
-        # и новые записи с хешированным паролем.
         password_ok = (
             check_password_hash(stored_password, user_password)
             if stored_password.startswith(('scrypt:', 'pbkdf2:'))
